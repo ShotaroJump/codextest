@@ -219,23 +219,133 @@
       color: var(--primary);
     }
 
+    .tips-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 240px) minmax(0, 1fr);
+      gap: clamp(1.5rem, 4vw, 2.5rem);
+      align-items: stretch;
+      margin-top: 1.8rem;
+    }
+
+    .tips-visual {
+      position: relative;
+      margin: 0;
+      border-radius: 24px;
+      overflow: hidden;
+      background: linear-gradient(160deg, rgba(0,164,226,0.85), rgba(125,217,255,0.45));
+      box-shadow: 0 20px 38px rgba(0, 54, 92, 0.18);
+      isolation: isolate;
+    }
+
+    .tips-visual::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 20% 20%, rgba(255,255,255,0.5), transparent 55%),
+                  radial-gradient(circle at 85% 80%, rgba(255,255,255,0.35), transparent 55%);
+      mix-blend-mode: screen;
+      pointer-events: none;
+    }
+
+    .tips-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.85;
+      transform: scale(1.05);
+    }
+
     .tips {
+      position: relative;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.5rem;
-      margin-top: 2rem;
+      gap: 1.6rem;
+      padding: clamp(1.2rem, 3vw, 1.8rem);
+      border-radius: 26px;
+      margin: 0;
+      background: linear-gradient(140deg, rgba(255,255,255,0.9), rgba(224,245,255,0.75));
+      border: 1px solid rgba(125, 217, 255, 0.35);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
+      overflow: hidden;
+      counter-reset: tip;
+    }
+
+    .tips::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(135deg, rgba(125,217,255,0.18) 0 18px, transparent 18px 36px);
+      opacity: 0.45;
+      pointer-events: none;
+    }
+
+    .tips::after {
+      content: "";
+      position: absolute;
+      width: 180px;
+      height: 320px;
+      right: -40px;
+      bottom: -60px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.4), rgba(125,217,255,0.25));
+      border-radius: 80px 80px 28px 28px;
+      transform: rotate(-12deg);
+      filter: blur(0.4px);
+      opacity: 0.65;
+      pointer-events: none;
     }
 
     .tip {
-      padding: 1.6rem;
-      border-radius: 18px;
-      background: linear-gradient(145deg, rgba(255,255,255,0.95), rgba(224,245,255,0.8));
-      box-shadow: 0 15px 30px rgba(0, 90, 120, 0.09);
+      position: relative;
+      padding: 1.8rem 1.8rem 1.6rem 5rem;
+      border-radius: 20px;
+      background: linear-gradient(160deg, rgba(255,255,255,0.95), rgba(208,241,255,0.75));
+      box-shadow: 0 18px 32px rgba(0, 90, 120, 0.12);
+      border: 1px solid rgba(125, 217, 255, 0.35);
+      overflow: hidden;
+      backdrop-filter: blur(6px);
+    }
+
+    .tip::before {
+      content: "";
+      position: absolute;
+      left: 1.6rem;
+      top: 1.4rem;
+      width: 42px;
+      height: 92px;
+      background: linear-gradient(180deg, rgba(125,217,255,0.95), rgba(0,164,226,0.8));
+      border-radius: 18px 18px 10px 10px;
+      box-shadow: inset 0 4px 8px rgba(255,255,255,0.45);
+    }
+
+    .tip::after {
+      counter-increment: tip;
+      content: counter(tip);
+      position: absolute;
+      top: 1.2rem;
+      right: 1.2rem;
+      width: 48px;
+      height: 48px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: #fff;
+      font-weight: 700;
+      font-size: 1.1rem;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 10px 18px rgba(0, 90, 120, 0.25);
     }
 
     .tip strong {
+      display: block;
       color: var(--deep);
-      font-size: 1.05rem;
+      font-size: 1.12rem;
+      letter-spacing: 0.03em;
+      margin-bottom: 0.45rem;
+    }
+
+    .tip p {
+      margin: 0;
+      color: rgba(15,45,58,0.9);
     }
 
     footer {
@@ -243,6 +353,43 @@
       padding: 3rem 1rem 2rem;
       color: rgba(15,45,58,0.7);
       font-size: 0.9rem;
+    }
+
+    @media (max-width: 900px) {
+      .tips-layout {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .tips-visual {
+        order: -1;
+        min-height: 220px;
+      }
+
+      .tips {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      }
+
+      .tip {
+        padding-left: 4.4rem;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .tips {
+        grid-template-columns: minmax(0, 1fr);
+        padding: 1rem;
+        border-radius: 22px;
+      }
+
+      .tip {
+        padding: 1.6rem 1.4rem 1.4rem 3.9rem;
+      }
+
+      .tip::after {
+        width: 42px;
+        height: 42px;
+        font-size: 1rem;
+      }
     }
 
     @media (prefers-color-scheme: dark) {
@@ -268,6 +415,51 @@
 
       .lineup-item {
         background: rgba(3, 28, 42, 0.88);
+      }
+
+      .tips-visual {
+        background: linear-gradient(160deg, rgba(0,164,226,0.65), rgba(0,54,92,0.55));
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+      }
+
+      .tips-visual img {
+        opacity: 0.65;
+      }
+
+      .tips {
+        background: linear-gradient(140deg, rgba(3,24,34,0.92), rgba(0,54,92,0.75));
+        border-color: rgba(0,164,226,0.4);
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+      }
+
+      .tips::before {
+        background: repeating-linear-gradient(135deg, rgba(0,164,226,0.3) 0 18px, transparent 18px 36px);
+        opacity: 0.35;
+      }
+
+      .tips::after {
+        background: linear-gradient(180deg, rgba(125,217,255,0.35), rgba(0,164,226,0.2));
+        opacity: 0.5;
+      }
+
+      .tip {
+        background: linear-gradient(160deg, rgba(8,40,55,0.95), rgba(0,54,92,0.8));
+        border-color: rgba(0,164,226,0.35);
+        box-shadow: 0 18px 32px rgba(0, 0, 0, 0.45);
+      }
+
+      .tip::before {
+        background: linear-gradient(180deg, rgba(125,217,255,0.8), rgba(0,164,226,0.75));
+        box-shadow: inset 0 4px 8px rgba(255,255,255,0.25);
+      }
+
+      .tip::after {
+        box-shadow: 0 12px 22px rgba(0, 0, 0, 0.45);
+      }
+
+      .tip strong,
+      .tip p {
+        color: rgba(216,242,255,0.92);
       }
     }
   </style>
@@ -323,18 +515,23 @@
 
     <section class="section">
       <h2>おすすめの楽しみ方</h2>
-      <div class="tips">
-        <div class="tip">
-          <strong>キンキンに冷やして</strong>
-          <p>冷蔵庫でしっかり冷やすと炭酸の刺激がアップ。氷を入れる場合は大きめの角氷でゆっくり溶かすのがコツです。</p>
-        </div>
-        <div class="tip">
-          <strong>フルーツと一緒に</strong>
-          <p>カットした柑橘やベリーを加えれば、手軽なフルーツポンチに。鮮やかな見た目と爽快感でパーティーにもぴったり。</p>
-        </div>
-        <div class="tip">
-          <strong>アレンジドリンクに</strong>
-          <p>紅茶やハーブティーと割ったり、シロップを加えたりとアレンジ自在。大人にはカクテルベースとしても人気です。</p>
+      <div class="tips-layout">
+        <figure class="tips-visual">
+          <img src="https://images.unsplash.com/photo-1526402464114-37419820756c?auto=format&fit=crop&w=700&q=80" alt="爽やかなソーダボトルのイラストレーション">
+        </figure>
+        <div class="tips">
+          <div class="tip">
+            <strong>キンキンに冷やして</strong>
+            <p>冷蔵庫でしっかり冷やすと炭酸の刺激がアップ。氷を入れる場合は大きめの角氷でゆっくり溶かすのがコツです。</p>
+          </div>
+          <div class="tip">
+            <strong>フルーツと一緒に</strong>
+            <p>カットした柑橘やベリーを加えれば、手軽なフルーツポンチに。鮮やかな見た目と爽快感でパーティーにもぴったり。</p>
+          </div>
+          <div class="tip">
+            <strong>アレンジドリンクに</strong>
+            <p>紅茶やハーブティーと割ったり、シロップを加えたりとアレンジ自在。大人にはカクテルベースとしても人気です。</p>
+          </div>
         </div>
       </div>
     </section>
